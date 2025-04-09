@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mcp-coze-server",
-    version="0.1.10",
+    version="0.1.12",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
