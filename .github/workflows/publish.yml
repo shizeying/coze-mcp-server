@@ -11,39 +11,38 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
         python-version: ['3.11']
-        arch: [x64, arm64]
-        exclude:
-          # Windows ARM64 暂不支持
-          - os: windows-latest
-            arch: arm64
-          # macOS Intel 不构建 ARM64
-          - os: macos-latest
-            arch: arm64
-            python-version: '3.11'
+        platform: [
+          { runner: "linux/amd64", arch: "x86_64" },
+          { runner: "linux/arm64", arch: "aarch64" }
+        ]
 
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
       with:
-        python-version: ${{ matrix.python-version }}
-        architecture: ${{ matrix.arch }}
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build twine
-    
-    - name: Build package
-      run: python -m build
-    
+        platforms: arm64
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build wheels
+      uses: pypa/cibuildwheel@v2.16.5
+      env:
+        CIBW_ARCHS: ${{ matrix.platform.arch }}
+        CIBW_BUILD: cp311-*
+        CIBW_SKIP: "*-musllinux*"
+      with:
+        package-dir: .
+        output-dir: dist
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: dist-${{ matrix.os }}-${{ matrix.arch }}
+        name: dist-${{ matrix.platform.arch }}
         path: dist/
         retention-days: 1
 
