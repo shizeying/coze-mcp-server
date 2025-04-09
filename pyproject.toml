@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcp-coze-server"
-version = "0.1.4"
+version = "0.1.5"
 authors = [
     { name = "flink", email = "w741069229@gmail.com" }
 ]
@@ -21,7 +21,8 @@ classifiers = [
 ]
 dependencies = [
     "mcp>=1.6.0",
-    "pydantic>=2.0.0"
+    "pydantic>=2.0.0",
+    "cozepy>=0.1.0"
 ]
 
 [project.urls]
