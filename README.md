@@ -4,9 +4,14 @@ A MCP server implementation for Coze API
 
 ## Installation
 
-Install the package with all dependencies:
+1. Install the package from PyPI:
 ```bash
 pip install mcp-coze-server
+```
+
+2. Install additional dependencies:
+```bash
+pip install cozepy @ git+https://github.com/shizeying/coze-py.git@v0.13.1.post1
 ```
 
 Or install from source:

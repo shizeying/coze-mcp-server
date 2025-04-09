@@ -11,7 +11,7 @@ authors = [
 description = "A MCP server implementation for Coze API"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = "MIT"
 keywords = ["mcp", "coze", "api", "server"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -20,10 +20,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dynamic = ["dependencies"]
-
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = [
+    "mcp>=1.6.0",
+    "pydantic>=2.0.0"
+]
 
 [project.urls]
 "Homepage" = "https://github.com/shizeying/coze-mcp-server"
