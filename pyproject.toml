@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcp-coze-server"
-version = "0.1.6"
+version = "0.1.7"
 authors = [
     { name = "flink", email = "w741069229@gmail.com" }
 ]
@@ -21,7 +21,8 @@ classifiers = [
 ]
 dependencies = [
     "mcp>=1.6.0",
-    "pydantic>=2.0.0"
+    "pydantic>=2.0.0",
+    "cozepy @ git+https://github.com/shizeying/coze-py.git@v0.13.1.post1"
 ]
 
 [project.urls]
@@ -38,11 +39,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[project.optional-dependencies]
-dev = [
-    "cozepy @ git+https://github.com/shizeying/coze-py.git@v0.13.1.post1"
-]
 
 [tool.build_system]
 build-requires = [
