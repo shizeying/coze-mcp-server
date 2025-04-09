@@ -1,6 +1,11 @@
+"""
+MCP server implementation for Coze API
+"""
+
 import asyncio
 
-from .server import mcp
+from .server import CozeServer
+from .__main__ import main
 
 def main():
     asyncio.run(mcp.run_stdio_async())
@@ -8,4 +13,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-__all__ = ["mcp", "main"] 
+__version__ = "0.1.3"
+__all__ = ["CozeServer", "main"] 

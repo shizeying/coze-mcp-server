@@ -1,3 +1,3 @@
-from coze_mcp_server import main
+from mcp_coze_server import main
 
 main() 

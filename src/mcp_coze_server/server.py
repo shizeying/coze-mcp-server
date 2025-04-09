@@ -1,7 +1,8 @@
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Any, Dict
+import logging
 
 from cozepy import (
     COZE_CN_BASE_URL,
@@ -20,6 +21,7 @@ from cozepy import (
 from cozepy.bots import PluginIdInfo, WorkflowIdInfo, ModelInfoConfig
 from mcp.server import FastMCP  # type: ignore
 from pydantic import BaseModel  # type: ignore
+from mcp import MCPServer, Request, Response
 
 
 class Config(BaseModel):
@@ -47,9 +49,26 @@ class Config(BaseModel):
         )
 
 
-class CozeServer(object):
-    def __init__(self, api_base: str, api_token: str):
-        self.coze = AsyncCoze(auth=AsyncTokenAuth(token=api_token), base_url=api_base)
+class CozeServer(MCPServer):
+    def __init__(self):
+        self.logger = logging.getLogger("mcp-coze-server")
+        self.coze = AsyncCoze(auth=AsyncTokenAuth(token=conf.api_token), base_url=conf.api_base)
+
+    async def initialize(self, request: Request) -> Response:
+        """处理初始化请求"""
+        self.logger.info("Initializing server...")
+        return Response(result={
+            "capabilities": {},
+            "serverInfo": {
+                "name": "mcp-coze-server",
+                "version": "0.1.3"
+            }
+        })
+
+    async def handle_request(self, method: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """处理其他请求"""
+        self.logger.info(f"Received request: {method}")
+        return {}
 
     async def bot_chat(self, bot_id: str, content: str) -> str:
         stream = self.coze.chat.stream(
@@ -79,9 +98,9 @@ class CozeServer(object):
         return msg
 
 
-mcp = FastMCP("coze-mcp-server")
+mcp = FastMCP("mcp-coze-server")
 conf = Config.build()
-server = CozeServer(conf.api_base, conf.api_token)
+server = CozeServer()
 
 
 def wrap_id(model: Union[BaseModel, List[BaseModel]], field: str = "id"):
