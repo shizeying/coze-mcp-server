@@ -4,8 +4,7 @@ MCP server implementation for Coze API
 
 import asyncio
 
-from .server import CozeServer
-from .__main__ import main
+from .server import CozeServer, mcp
 from .version import __version__
 
 def main():
