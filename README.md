@@ -34,7 +34,7 @@ export COZE_API_BASE="https://api.coze.cn"  # 或其他API地址
 2. 运行服务器：
 
 ```bash
-python -m coze_mcp_server
+python -m mcp_coze_server
 ```
 
 ## Configuration
