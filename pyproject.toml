@@ -20,15 +20,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = [
-    "mcp>=1.6.0",
-    "pydantic>=2.0.0",
-]
+dynamic = ["dependencies"]
 
-[project.optional-dependencies]
-dev = [
-    "cozepy @ git+https://github.com/shizeying/coze-py.git@v0.13.1.post1",
-]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
 
 [project.urls]
 "Homepage" = "https://github.com/shizeying/coze-mcp-server"
