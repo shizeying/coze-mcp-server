@@ -23,6 +23,8 @@ from mcp.server import FastMCP  # type: ignore
 from pydantic import BaseModel  # type: ignore
 from mcp import MCPServer, Request, Response
 
+from .version import __version__
+
 
 class Config(BaseModel):
     api_token: str
@@ -61,7 +63,7 @@ class CozeServer(MCPServer):
             "capabilities": {},
             "serverInfo": {
                 "name": "mcp-coze-server",
-                "version": "0.1.3"
+                "version": __version__
             }
         })
 

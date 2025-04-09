@@ -6,6 +6,7 @@ import asyncio
 
 from .server import CozeServer
 from .__main__ import main
+from .version import __version__
 
 def main():
     asyncio.run(mcp.run_stdio_async())
@@ -13,5 +14,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-__version__ = "0.1.3"
-__all__ = ["CozeServer", "main"] 
+__all__ = ["CozeServer", "main", "__version__"] 
