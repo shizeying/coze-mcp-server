@@ -1,8 +1,8 @@
+import logging
 import os
 import sys
 from pathlib import Path
 from typing import List, Optional, Union, Any, Dict
-import logging
 
 from cozepy import (
     COZE_CN_BASE_URL,
@@ -21,9 +21,6 @@ from cozepy import (
 from cozepy.bots import PluginIdInfo, WorkflowIdInfo, ModelInfoConfig
 from mcp.server import FastMCP  # type: ignore
 from pydantic import BaseModel  # type: ignore
-from mcp import MCPServer, Request, Response
-
-from .version import __version__
 
 
 class Config(BaseModel):
@@ -51,22 +48,10 @@ class Config(BaseModel):
         )
 
 
-class CozeServer(MCPServer):
+class CozeServer(object):
     def __init__(self):
         self.logger = logging.getLogger("mcp-coze-server")
         self.coze = AsyncCoze(auth=AsyncTokenAuth(token=conf.api_token), base_url=conf.api_base)
-
-    async def initialize(self, request: Request) -> Response:
-        """处理初始化请求"""
-        self.logger.info("Initializing server...")
-        return Response(result={
-            "capabilities": {},
-            "serverInfo": {
-                "name": "mcp-coze-server",
-                "version": __version__
-            }
-        })
-
     async def handle_request(self, method: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """处理其他请求"""
         self.logger.info(f"Received request: {method}")
